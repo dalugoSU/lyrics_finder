@@ -1,6 +1,6 @@
 ## lyrics_finder
 
-This is a little project using musixmatch's API. It is the light version so it does not return all the lyrics haha.
+This is a little project using musixmatch's API. It is the light version so it does not return all the lyrics haha. It also uses azure's text analytic's resource to get lyric sentiment.
 
 ### To use (windows, python 3.8):
 
