@@ -1,4 +1,4 @@
-### lyrics_finder
+## lyrics_finder
 
 This is a little project using musixmatch's API. It is the light version so it does not return all the lyrics haha.
 
