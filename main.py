@@ -16,7 +16,7 @@ class song_lyrics:
             return the first track
         '''
         # API key and URL from my musixmatch account (Trial)
-        key = "853f1418c56f9d30f64ff7a5c0a1756e"
+        key = "YOUR API KEY" # musixmatch API
         url = "https://api.musixmatch.com/ws/1.1/track.search"
 
         # API Key is part of your params (Thank you angela for the clarification on this)
@@ -35,7 +35,7 @@ class song_lyrics:
             return the lyrics as text string
         '''
         # API Key gotten from mismusix account $ Request URL from musixmach for track.lyrics.get
-        API_key = '853f1418c56f9d30f64ff7a5c0a1756e'
+        API_key = 'YOUR API KEY' # musixmatch API
         url = "https://api.musixmatch.com/ws/1.1/track.lyrics.get"
 
         # parameters for my search (taken from the musixmatch website)
@@ -48,6 +48,26 @@ class song_lyrics:
 
         # return lyrics
         return lyrics
+
+    def sentiment(self, text):
+        '''
+            returns the sentiment of the given text. up to you as to whether it returns just 'pos', 'neg', 'neutral' or more information
+        '''
+        # API Key and Endpoint from Azure's resource. Url using endpoint and sentiment analytics API URL.
+        API_key = "YOUR API KEY"
+        endpoint = "YOUR ENDPOINT"
+        url = f'{endpoint}text/analytics/v3.0/sentiment'
+
+        # Header with API Key, Documents with text parameter to analyze.
+        header = {'Ocp-Apim-Subscription-Key': API_key}
+        documents = {'documents': [{'id': '1', 'text': text}]}
+
+        # Request using requests with url, header key and documents to analyze
+        response = requests.post(url, headers=header, json=documents)
+        entity = response.json()
+
+        # Return the sentiment only (Pos, Neg, Neutral, Mixed)
+        return entity['documents'][0]['sentiment']
 
 
 lyrics = song_lyrics()
@@ -84,10 +104,14 @@ def post_lyrics():
         for word in lyricsToString.split('\n'):
             bottom_frame_text.insert(tk.END, f"\n\n{word}")
 
+        sentiment = lyrics.sentiment(lyricsToString)
+        bottom_frame_text.insert(tk.END, f"\n\n\nSong Lyric Sentiment: {sentiment}")
+
     except TypeError:
         bottom_frame_text.insert(tk.END, f"\n\n\n\n\n\n\n\nMISING EITHER SONG TITLE OR ARTIST\n OR LYRICS NOT FOUND")
     except IndexError:
         bottom_frame_text.insert(tk.END, f"\n\n\n\n\n\n\n\n               MISSPELLINGS FOUND")
+
 
 main_frame = tk.Frame(root, bg='dark grey')
 main_frame.pack(fill='both', expand=True)
