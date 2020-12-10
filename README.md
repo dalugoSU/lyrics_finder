@@ -1,9 +1,8 @@
 ### lyrics_finder
 
 This is a little project using musixmatch's API. It is the light version so it does not return all the lyrics haha.
-To use:
 
-(windows, python 3.8)
+### To use (windows, python 3.8):
 
 pip install tkinter
 
